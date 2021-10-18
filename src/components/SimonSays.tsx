@@ -1,12 +1,11 @@
 import React, { MouseEvent, Component } from "react";
-import { Container } from "reactstrap";
 import { Howl } from "howler";
 import greenSound from "../audio/green.mp3";
 import redSound from "../audio/red.mp3";
 import yellowSound from "../audio/yellow.mp3";
 import blueSound from "../audio/blue.mp3";
 import failSound from "../audio/fail.wav";
-import SimonSaysState from "../interfaces/simonSays.i";
+import { SimonSaysState } from "../interfaces/simonSays.i";
 import background from "../images/background.jpg";
 
 class SimonSays extends Component<{}, SimonSaysState> {
@@ -21,7 +20,7 @@ class SimonSays extends Component<{}, SimonSaysState> {
     switchOn: false,
   };
 
-  private failTimer: number;
+  private failTimer: number | undefined;
 
   private greenSound = new Howl({
     src: [greenSound],
@@ -58,15 +57,16 @@ class SimonSays extends Component<{}, SimonSaysState> {
       this.setState({ userTurn: false });
       this.failSound.play();
       let i = 0;
+      const score = document.getElementById("score");
       do {
-        document.getElementById("score").innerText = "!!";
+        if (score) score.innerText = "!!";
         await this.wait(200);
-        document.getElementById("score").innerText = "";
+        if (score) score.innerText = "";
         await this.wait(200);
         i += 1;
       } while (i < 5);
       this.setState({ userTurn: true });
-      document.getElementById("score").innerText = currentStreak.toString();
+      if (score) score.innerText = currentStreak.toString();
       if (strictMode) {
         return this.onFailStrict();
       }
@@ -91,7 +91,8 @@ class SimonSays extends Component<{}, SimonSaysState> {
         if (turnNum === combination.length) {
           clearTimeout(this.failTimer);
           if (currentStreak <= 4) this.setState({ speed: 1000 });
-          else if (currentStreak > 4 && currentStreak <= 8) this.setState({ speed: 750 });
+          else if (currentStreak > 4 && currentStreak <= 8)
+            this.setState({ speed: 750 });
           else this.setState({ speed: 500 });
           this.setState({
             currentStreak: currentStreak + 1,
@@ -104,14 +105,15 @@ class SimonSays extends Component<{}, SimonSaysState> {
         this.setState({ userTurn: false });
         clearTimeout(this.failTimer);
         let i = 0;
+        const score = document.getElementById("score");
         do {
-          document.getElementById("score").innerText = "!!";
+          if (score) score.innerText = "!!";
           await this.wait(200);
-          document.getElementById("score").innerText = "";
+          if (score) score.innerText = "";
           await this.wait(200);
           i += 1;
         } while (i < 5);
-        document.getElementById("score").innerText = currentStreak.toString();
+        if (score) score.innerText = currentStreak.toString();
         this.setState({ userTurn: true });
         if (strictMode) {
           this.onFailStrict();
@@ -158,11 +160,10 @@ class SimonSays extends Component<{}, SimonSaysState> {
       default:
         break;
     }
-    document.getElementById(colour).classList.add(`simon__flash-${colour}-button`);
+    const tile = document.getElementById(colour);
+    tile?.classList.add(`simon__flash-${colour}-button`);
     await this.wait(300);
-    return document
-      .getElementById(colour)
-      .classList.remove(`simon__flash-${colour}-button`);
+    tile?.classList.remove(`simon__flash-${colour}-button`);
   };
 
   private onStartGame = async (): Promise<void> => {
@@ -211,6 +212,7 @@ class SimonSays extends Component<{}, SimonSaysState> {
         colour = "blue";
         break;
       default:
+        colour = "";
         break;
     }
     combination.push(colour);
@@ -268,109 +270,120 @@ class SimonSays extends Component<{}, SimonSaysState> {
     });
 
   public render(): JSX.Element {
-    const { switchOn, userTurn, playingGame, currentStreak, strictMode } = this.state;
+    const { switchOn, userTurn, playingGame, currentStreak, strictMode } =
+      this.state;
     return (
       <div
         className="simon__background"
-        style={{ background: `url(${background}) no-repeat center center fixed` }}
+        style={{
+          background: `url(${background}) no-repeat center center fixed`,
+        }}
       >
-        <Container>
-          <div className="simon__container">
-            <div
-              className="simon__green-button"
-              id="green"
-              onClick={switchOn && userTurn ? this.onTakeTurn : undefined}
-              role="button"
-              tabIndex={0}
-            />
-            <div
-              className="simon__red-button"
-              id="red"
-              onClick={switchOn && userTurn ? this.onTakeTurn : undefined}
-              role="button"
-              tabIndex={0}
-            />
-            <div
-              className="simon__yellow-button"
-              id="yellow"
-              onClick={switchOn && userTurn ? this.onTakeTurn : undefined}
-              role="button"
-              tabIndex={0}
-            />
-            <div
-              className="simon__blue-button"
-              id="blue"
-              onClick={switchOn && userTurn ? this.onTakeTurn : undefined}
-              role="button"
-              tabIndex={0}
-            />
-            <div className="simon__center-controls">
-              <div className="simon__text-container">
-                <div className="simon__title">Simon</div>
-                <div className="simon__copyright">&copy;</div>
+        <div className="simon__container">
+          <div
+            className="simon__green-button"
+            id="green"
+            onClick={switchOn && userTurn ? this.onTakeTurn : undefined}
+            role="button"
+            tabIndex={0}
+          />
+          <div
+            className="simon__red-button"
+            id="red"
+            onClick={switchOn && userTurn ? this.onTakeTurn : undefined}
+            role="button"
+            tabIndex={0}
+          />
+          <div
+            className="simon__yellow-button"
+            id="yellow"
+            onClick={switchOn && userTurn ? this.onTakeTurn : undefined}
+            role="button"
+            tabIndex={0}
+          />
+          <div
+            className="simon__blue-button"
+            id="blue"
+            onClick={switchOn && userTurn ? this.onTakeTurn : undefined}
+            role="button"
+            tabIndex={0}
+          />
+          <div className="simon__center-controls">
+            <div className="simon__text-container">
+              <div className="simon__title">Simon</div>
+              <div className="simon__copyright">&copy;</div>
+            </div>
+            <div className="simon__button-container">
+              <div
+                id="score"
+                className={switchOn ? "simon__score--active" : "simon__score"}
+              >
+                {!switchOn ? "--" : playingGame ? currentStreak : "--"}
               </div>
-              <div className="simon__button-container">
+              <div>
                 <div
-                  id="score"
-                  className={switchOn ? "simon__score--active" : "simon__score"}
-                >
-                  {!switchOn ? "--" : playingGame ? currentStreak : "--"}
-                </div>
-                <div>
-                  <div
-                    className={
-                      playingGame ? "simon__light--active" : "simon__light--inactive"
-                    }
-                  />
-                  <div
-                    className={
-                      playingGame ? "simon__start-button--pressed" : "simon__start-button"
-                    }
-                    onClick={switchOn && !playingGame ? this.onStartGame : undefined}
-                    role="button"
-                    tabIndex={0}
-                  />
-                  <div className="simon__text">START</div>
-                </div>
-                <div>
-                  <div
-                    className={
-                      strictMode ? "simon__light--active" : "simon__light--inactive"
-                    }
-                  />
-                  <div
-                    onClick={switchOn && !playingGame ? this.onSetStrictMode : undefined}
-                    className={
-                      strictMode || playingGame
-                        ? "simon__strict-button--pressed"
-                        : "simon__strict-button"
-                    }
-                  />
-                  <div className="simon__text">STRICT</div>
-                </div>
+                  className={
+                    playingGame
+                      ? "simon__light--active"
+                      : "simon__light--inactive"
+                  }
+                />
+                <div
+                  className={
+                    playingGame
+                      ? "simon__start-button--pressed"
+                      : "simon__start-button"
+                  }
+                  onClick={
+                    switchOn && !playingGame ? this.onStartGame : undefined
+                  }
+                  role="button"
+                  tabIndex={0}
+                />
+                <div className="simon__text">START</div>
               </div>
-              <div className="simon__switch-container">
-                <div className="simon__toggle-text">OFF</div>
-                <label className="simon__switch" htmlFor="power-switch">
-                  <input
-                    className="simon__switch--toggle"
-                    type="checkbox"
-                    name="power-switch"
-                    checked={switchOn}
-                    onChange={this.onPowerSwitch}
-                  />
-                  <span
-                    className="simon__slider"
-                    role="button"
-                    tabIndex={0}
-                    onClick={this.onPowerSwitch}
-                  />
-                </label>
-                <div className="simon__toggle-text">ON</div>
+              <div>
+                <div
+                  className={
+                    strictMode
+                      ? "simon__light--active"
+                      : "simon__light--inactive"
+                  }
+                />
+                <div
+                  onClick={
+                    switchOn && !playingGame ? this.onSetStrictMode : undefined
+                  }
+                  className={
+                    strictMode || playingGame
+                      ? "simon__strict-button--pressed"
+                      : "simon__strict-button"
+                  }
+                />
+                <div className="simon__text">STRICT</div>
               </div>
             </div>
+            <div className="simon__switch-container">
+              <div className="simon__toggle-text">OFF</div>
+              <label className="simon__switch" htmlFor="power-switch">
+                <input
+                  className="simon__switch--toggle"
+                  type="checkbox"
+                  name="power-switch"
+                  checked={switchOn}
+                  onChange={this.onPowerSwitch}
+                />
+                <span
+                  className="simon__slider"
+                  role="button"
+                  tabIndex={0}
+                  onClick={this.onPowerSwitch}
+                />
+              </label>
+              <div className="simon__toggle-text">ON</div>
+            </div>
           </div>
-        </Container>
+        </div>
       </div>
     );
   }

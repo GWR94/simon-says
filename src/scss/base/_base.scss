@@ -1,5 +1,9 @@
 * {
   box-sizing: border-box;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
 }
 
 body {
@@ -7,6 +11,7 @@ body {
   font-family: "Open Sans", sans-serif;
   font-size: $m-size;
   line-height: 1.6;
+  margin: 0 !important;
 
   &:focus {
     outline: none;

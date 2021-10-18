@@ -11,12 +11,12 @@ $blue: rgb(0, 0, 175);
   -o-background-size: cover;
   background-size: cover;
   width: 100vw;
-  height: 100vh;
+  height: calc(100vh + 1px);
 }
 
 .simon__container {
   width: 400px;
-  margin: 20vh auto;
+  margin: 25vh auto;
 
   @media (max-width: $md-breakpoint) {
     width: 320px;

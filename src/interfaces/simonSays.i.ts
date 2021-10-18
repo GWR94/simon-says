@@ -1,4 +1,4 @@
-interface SimonSaysState {
+export interface SimonSaysState {
   currentStreak: number;
   strictMode: boolean;
   combination: string[];
@@ -8,5 +8,3 @@ interface SimonSaysState {
   speed: number;
   switchOn: boolean;
 }
-
-export { SimonSaysState as default };
