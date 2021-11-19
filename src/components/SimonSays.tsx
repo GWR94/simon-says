@@ -127,7 +127,6 @@ class SimonSays extends Component<{}, SimonSaysState> {
   private onPowerSwitch = (): void => {
     const { switchOn } = this.state;
     this.onResetGame();
-    clearTimeout(this.failTimer);
     this.setState({ switchOn: !switchOn });
   };
 
@@ -322,6 +321,7 @@ class SimonSays extends Component<{}, SimonSaysState> {
               </div>
               <div>
                 <div
+                  data-testid="start-light"
                   className={
                     playingGame
                       ? "simon__light--active"
@@ -329,6 +329,7 @@ class SimonSays extends Component<{}, SimonSaysState> {
                   }
                 />
                 <div
+                  data-testid="start-btn"
                   className={
                     playingGame
                       ? "simon__start-button--pressed"
@@ -344,6 +345,7 @@ class SimonSays extends Component<{}, SimonSaysState> {
               </div>
               <div>
                 <div
+                  data-testid="strict-light"
                   className={
                     strictMode
                       ? "simon__light--active"
@@ -354,6 +356,9 @@ class SimonSays extends Component<{}, SimonSaysState> {
                   onClick={
                     switchOn && !playingGame ? this.onSetStrictMode : undefined
                   }
+                  data-testid="strict-btn"
+                  role="button"
+                  tabIndex={0}
                   className={
                     strictMode || playingGame
                       ? "simon__strict-button--pressed"

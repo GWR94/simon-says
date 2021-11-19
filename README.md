@@ -1,46 +1,58 @@
-# Getting Started with Create React App
+# Simon Says
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![Simon Says](src/images/simonsays.png)
 
-## Available Scripts
+Open app [here](https://play-simon-says.netlify.app/).
 
-In the project directory, you can run:
+## Table of Contents
+  - [General Information](#general-information)
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [Game Modes](#game-modes)
+  - [Strict Mode](#strict-mode)
+  - [Regular Mode](#regular-mode)
+  - [Status](#status)
+  - [Todo](#todo)
 
-### `npm start`
+## General Information
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Simon Says is the classic kids game where the computer picks a sequence of buttons you must pick in that specific order. If the user is successful then the computer will repeat the previous sequence and add another to it for you to complete. This process will continue over and over until you make a mistake. The time allowed to complete each sequence decreases gradually over time, and the speed of the sequence will also speed up with progression too.
+## Installation
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+If you are looking to view/make changes to the existing codebase, then cloning the repository is the best way to achieve this. 
 
-### `npm test`
+To do this navigate to a suitable directory, and run `git clone https://github.com/jamesgower/simon-says.git` from the terminal. 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Once the repository is cloned, you can navigate to the repository and run `npm install` to install all of the dependencies. To run the application, you can run `npm run start` from the root directory, and a local version of the can be accessed from accessing http://localhost:3000 from your browser.
 
-### `npm run build`
+## Usage
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+To use the application, it can be accessed from 
+[this](https://play-simon-says.netlify.app/) link (https://play-simon-says.netlify.app/), or by installing it with the above method.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Game Modes
+### Strict Mode
+If you press the yellow "Strict" button then the game will work like a classic game of Simon Says. If you fail at any point, then the game will be reset back to its original state and you will have to start from the beginning. 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Regular Mode
 
-### `npm run eject`
+If the "Strict" button is not pressed then the game will allow you to fail as many times as you like and it will not reset you back to the beginning. You can see how far you can get without the pressure of failing. 
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Technologies
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- React
+- Redux
+- TypeScript
+- Howler
+- SCSS
+- CreateReactApp
+- Netlify (Hosting)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Status
 
-## Learn More
+The application is in a working state, but there are features which need to be implemented to be considered a finished product. Updates will be made in due course.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Todo
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Testing needs to be refactored and uploaded since refactoring and upgrading the application.
