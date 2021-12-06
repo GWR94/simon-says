@@ -28,7 +28,9 @@ describe("<SimonSays />", () => {
     expect(screen.getByTestId("strict-light")).toHaveClass(
       "simon__light--inactive"
     );
+    // click start button
     fireEvent.click(screen.getByTestId("strict-btn"));
+    // expect light to be turned on
     expect(screen.getByTestId("strict-light")).toHaveClass(
       "simon__light--active"
     );
@@ -42,10 +44,13 @@ describe("<SimonSays />", () => {
     expect(screen.getByTestId("start-light")).toHaveClass(
       "simon__light--inactive"
     );
+    // click start button
     fireEvent.click(screen.getByTestId("start-btn"));
+    // expect light to be turned on
     expect(screen.getByTestId("start-light")).toHaveClass(
       "simon__light--active"
     );
+    // expect store to be 0 rather than --
     expect(score).toHaveTextContent(0);
   });
 });
